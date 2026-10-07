@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Международные отношения в XIX веке - Рабочий лист</title>
+    <style>
+        :root {
+            --primary: #2d5016;
+            --primary-light: #4a7c2c;
+            --primary-dark: #1a3009;
+            --accent: #6ba832;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #5a6c7d;
+            --border: #e1e8ed;
+            --success: #27ae60;
+            --error: #e74c3c;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        #app {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        h3 {
+            color: var(--primary-light);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 44px;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: #d1d9e0;
+        }
+
+        .btn-block {
+            width: 100%;
+            display: block;
+        }
+
+        .question {
+            margin-bottom: 24px;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 44px;
+        }
+
+        .option:hover {
+            border-color: var(--primary-light);
+            background: #f0f7e8;
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: #e8f5e0;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .text-block {
+            background: #f9fafb;
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .text-block p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .search-task {
+            margin-bottom: 20px;
+        }
+
+        .search-task input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            min-height: 44px;
+            transition: border-color 0.2s;
+        }
+
+        .search-task input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .search-task input:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .result-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .result-message {
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: var(--radius);
+        }
+
+        .result-message.excellent {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .result-message.good {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .result-message.average {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .result-message.poor {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .feedback {
+            margin-top: 8px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            padding: 8px;
+            background: #fff5f5;
+            border-radius: 4px;
+        }
+
+        .intro-text {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 480px) {
+            #app {
+                padding: 12px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main id="app" role="main"></main>
+
+    <script>
+        // Константы: вопросы теста
+        const QUIZ_QUESTIONS = [
+            {
+                id: 1,
+                text: "В каком году состоялся Венский конгресс?",
+                options: ["1812", "1814-1815", "1820", "1830"],
+                correct: 1
+            },
+            {
+                id: 2,
+                text: "Какая страна была главным организатором Венского конгресса?",
+                options: ["Франция", "Россия", "Австрия", "Пруссия"],
+                correct: 2
+            },
+            {
+                id: 3,
+                text: "Кто представлял Россию на Венском конгрессе?",
+                options: ["Александр I", "Николай I", "Павел I", "Александр II"],
+                correct: 0
+            },
+            {
+                id: 4,
+                text: "Какой принцип был основой Венской системы международных отношений?",
+                options: ["Принцип национализма", "Принцип легитимизма", "Принцип демократии", "Принцип либерализма"],
+                correct: 1
+            },
+            {
+                id: 5,
+                text: "Что такое Священный союз?",
+                options: [
+                    "Военный блок против Франции",
+                    "Союз монархов для борьбы с революциями",
+                    "Торговое соглашение",
+                    "Дипломатический клуб"
+                ],
+                correct: 1
+            }
+        ];
+
+        // Константы: текст Венского конгресса
+        const CONGRESS_TEXT = `Венский конгресс созывался для решения вопросов после поражения Наполеона. Он работал с сентября 1814 года по июнь 1815 года в столице Австрии - Вене.
+
+Главной целью конгресса было восстановление стабильности в Европе после наполеоновских войн. Участники стремились создать такую систему международных отношений, которая предотвратила бы новые конфликты.
+
+В работе конгресса участвовали представители всех европейских государств. Решающую роль играли Россия, Австрия, Пруссия, Великобритания и Франция. Россию представлял император Александр I, Австрию - канцлер Меттерних.
+
+Конгресс принял важные территориальные решения. Пруссия получила часть Саксонии и Рейнскую область. Австрия вернула себе контроль над Северной Италией. Россия присоединила большую часть герцогства Варшавского, создав Царство Польское.
+
+Главным принципом конгресса стал легитимизм - восстановление законных династий, свергнутых Наполеоном. Этот принцип применялся ко многим странам Европы.
+
+В сентябре 1815 года по инициативе Александра I был создан Священный союз - соглашение монархов России, Австрии и Пруссии о взаимной помощи для борьбы с революционными движениями. Позже к союзу присоединились большинство европейских государств.
+
+Венская система международных отношений просуществовала до Крымской войны 1853-1856 годов.`;
+
+        // Константы: задания на поиск информации
+        const SEARCH_TASKS = [
+            {
+                id: 1,
+                question: "В каком городе проходил Венский конгресс?",
+                answer: "вена"
+            },
+            {
+                id: 2,
+                question: "Кто представлял Австрию на конгрессе?",
+                answer: "меттерних"
+            },
+            {
+                id: 3,
+                question: "Какой принцип стал главным на конгрессе?",
+                answer: "легитимизм"
+            },
+            {
+                id: 4,
+                question: "В каком году был создан Священный союз?",
+                answer: "1815"
+            },
+            {
+                id: 5,
+                question: "До какого события просуществовала Венская система?",
+                answer: "крымской войны"
+            }
+        ];
+
+        // State: состояние приложения
+        let state = {
+            currentScreen: 'start',
+            quizAnswers: {},
+            searchAnswers: {},
+            quizSubmitted: false,
+            searchSubmitted: false,
+            finalScore: 0
+        };
+
+        // Render: отрисовка экрана
+        function render() {
+            const app = document.getElementById('app');
+            app.innerHTML = '';
+
+            switch(state.currentScreen) {
+                case 'start':
+                    renderStartScreen(app);
+                    break;
+                case 'quiz':
+                    renderQuizScreen(app);
+                    break;
+                case 'search':
+                    renderSearchScreen(app);
+                    break;
+                case 'result':
+                    renderResultScreen(app);
+                    break;
+            }
+        }
+
+        // Render: экран старта
+        function renderStartScreen(container) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            const title = document.createElement('h1');
+            title.textContent = 'Международные отношения в XIX веке';
+            
+            const intro = document.createElement('p');
+            intro.className = 'intro-text';
+            intro.textContent = 'Рабочий лист для проверки знаний по теме Венского конгресса и международной политики XIX века';
+            
+            const description = document.createElement('p');
+            description.textContent = 'Вам предстоит выполнить два задания:';
+            
+            const list = document.createElement('ul');
+            list.style.marginLeft = '20px';
+            list.style.marginBottom = '20px';
+            
+            const item1 = document.createElement('li');
+            item1.textContent = 'Тест из 5 вопросов с выбором ответа';
+            
+            const item2 = document.createElement('li');
+            item2.textContent = 'Поиск информации в тексте о Венском конгрессе';
+            
+            list.appendChild(item1);
+            list.appendChild(item2);
+            
+            const total = document.createElement('p');
+            total.innerHTML = '<strong>Максимальный балл: 10</strong>';
+            total.style.textAlign = 'center';
+            total.style.marginTop = '20px';
+            
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-block';
+            btn.textContent = 'Начать работу';
+            btn.setAttribute('aria-label', 'Начать выполнение заданий');
+            btn.addEventListener('click', handleStart);
+            
+            card.appendChild(title);
+            card.appendChild(intro);
+            card.appendChild(description);
+            card.appendChild(list);
+            card.appendChild(total);
+            card.appendChild(btn);
+            
+            container.appendChild(card);
+        }
+
+        // Render: экран теста
+        function renderQuizScreen(container) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            const title = document.createElement('h2');
+            title.textContent = 'Часть 1: Тест с выбором ответа';
+            
+            card.appendChild(title);
+            
+            QUIZ_QUESTIONS.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                const questionText = document.createElement('p');
+                questionText.className = 'question-text';
+                questionText.textContent = `${index + 1}. ${q.text}`;
+                
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                optionsDiv.setAttribute('role', 'radiogroup');
+                optionsDiv.setAttribute('aria-label', `Варианты ответа на вопрос ${index + 1}`);
+                
+                q.options.forEach((option, optIndex) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    if (state.quizAnswers[q.id] === optIndex) {
+                        optionDiv.classList.add('selected');
+                    }
+                    
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `question-${q.id}`;
+                    radio.id = `q${q.id}-opt${optIndex}`;
+                    radio.value = optIndex;
+                    radio.checked = state.quizAnswers[q.id] === optIndex;
+                    radio.addEventListener('change', () => handleQuizAnswer(q.id, optIndex));
+                    
+                    const label = document.createElement('label');
+                    label.textContent = option;
+                    label.htmlFor = `q${q.id}-opt${optIndex}`;
+                    
+                    optionDiv.appendChild(radio);
+                    optionDiv.appendChild(label);
+                    optionDiv.addEventListener('click', () => {
+                        radio.checked = true;
+                        handleQuizAnswer(q.id, optIndex);
+                    });
+                    
+                    optionsDiv.appendChild(optionDiv);
+                });
+                
+                questionDiv.appendChild(questionText);
+                questionDiv.appendChild(optionsDiv);
+                
+                if (state.quizSubmitted) {
+                    const feedback = document.createElement('div');
+                    feedback.className = 'feedback';
+                    if (state.quizAnswers[q.id] === q.correct) {
+                        feedback.classList.add('correct');
+                        feedback.textContent = '✓ Правильный ответ';
+                    } else {
+                        feedback.classList.add('incorrect');
+                        feedback.textContent = `✗ Неправильно. Правильный ответ: ${q.options[q.correct]}`;
+                    }
+                    questionDiv.appendChild(feedback);
+                }
+                
+                card.appendChild(questionDiv);
+            });
+            
+            if (!state.quizSubmitted) {
+                const submitBtn = document.createElement('button');
+                submitBtn.className = 'btn btn-block';
+                submitBtn.textContent = 'Проверить ответы';
+                submitBtn.addEventListener('click', handleSubmitQuiz);
+                card.appendChild(submitBtn);
+            } else {
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'btn btn-block';
+                nextBtn.textContent = 'Перейти к части 2';
+                nextBtn.addEventListener('click', handleNextToSearch);
+                card.appendChild(nextBtn);
+            }
+            
+            container.appendChild(card);
+        }
+
+        // Render: экран поиска информации
+        function renderSearchScreen(container) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            const title = document.createElement('h2');
+            title.textContent = 'Часть 2: Поиск информации в тексте';
+            
+            const instruction = document.createElement('p');
+            instruction.textContent = 'Прочитайте текст и найдите ответы на вопросы:';
+            
+            const textBlock = document.createElement('div');
+            textBlock.className = 'text-block';
+            textBlock.setAttribute('role', 'article');
+            textBlock.setAttribute('aria-label', 'Текст о Венском конгрессе');
+            
+            CONGRESS_TEXT.split('\n\n').forEach(paragraph => {
+                const p = document.createElement('p');
+                p.textContent = paragraph;
+                textBlock.appendChild(p);
+            });
+            
+            card.appendChild(title);
+            card.appendChild(instruction);
+            card.appendChild(textBlock);
+            
+            SEARCH_TASKS.forEach((task, index) => {
+                const taskDiv = document.createElement('div');
+                taskDiv.className = 'search-task';
+                
+                const question = document.createElement('label');
+                question.textContent = `${index + 1}. ${task.question}`;
+                question.style.display = 'block';
+                question.style.marginBottom = '8px';
+                question.style.fontWeight = '500';
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Введите ответ';
+                input.value = state.searchAnswers[task.id] || '';
+                input.setAttribute('aria-label', `Ответ на вопрос ${index + 1}`);
+                input.addEventListener('input', (e) => handleSearchAnswer(task.id, e.target.value));
+                
+                taskDiv.appendChild(question);
+                taskDiv.appendChild(input);
+                
+                if (state.searchSubmitted) {
+                    const feedback = document.createElement('div');
+                    feedback.className = 'feedback';
+                    const userAnswer = (state.searchAnswers[task.id] || '').toLowerCase().trim();
+                    if (userAnswer.includes(task.answer)) {
+                        feedback.classList.add('correct');
+                        feedback.textContent = '✓ Правильный ответ';
+                    } else {
+                        feedback.classList.add('incorrect');
+                        feedback.textContent = `✗ Неправильно. Правильный ответ: ${task.answer}`;
+                    }
+                    taskDiv.appendChild(feedback);
+                }
+                
+                card.appendChild(taskDiv);
+            });
+            
+            if (!state.searchSubmitted) {
+                const submitBtn = document.createElement('button');
+                submitBtn.className = 'btn btn-block';
+                submitBtn.textContent = 'Проверить ответы';
+                submitBtn.addEventListener('click', handleSubmitSearch);
+                card.appendChild(submitBtn);
+            } else {
+                const resultBtn = document.createElement('button');
+                resultBtn.className = 'btn btn-block';
+                resultBtn.textContent = 'Показать результат';
+                resultBtn.addEventListener('click', handleShowResult);
+                card.appendChild(resultBtn);
+            }
+            
+            container.appendChild(card);
+        }
+
+        // Render: экран результата
+        function renderResultScreen(container) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            const title = document.createElement('h1');
+            title.textContent = 'Результат';
+            
+            const scoreDiv = document.createElement('div');
+            scoreDiv.className = 'result-score';
+            scoreDiv.textContent = `${state.finalScore} / 10`;
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'result-message';
+            
+            if (state.finalScore >= 9) {
+                messageDiv.classList.add('excellent');
+                messageDiv.textContent = 'Отлично! Вы прекрасно знаете тему!';
+            } else if (state.finalScore >= 7) {
+                messageDiv.classList.add('good');
+                messageDiv.textContent = 'Хорошо! У вас solidные знания.';
+            } else if (state.finalScore >= 5) {
+                messageDiv.classList.add('average');
+                messageDiv.textContent = 'Удовлетворительно. Стоит повторить материал.';
+            } else {
+                messageDiv.classList.add('poor');
+                messageDiv.textContent = 'Необходимо изучить тему подробнее.';
+            }
+            
+            const details = document.createElement('div');
+            details.style.marginTop = '20px';
+            details.style.padding = '16px';
+            details.style.background = '#f9fafb';
+            details.style.borderRadius = 'var(--radius)';
+            
+            const quizScore = calculateQuizScore();
+            const searchScore = calculateSearchScore();
+            
+            const quizDetail = document.createElement('p');
+            quizDetail.innerHTML = `<strong>Тест:</strong> ${quizScore} из 5 баллов`;
+            
+            const searchDetail = document.createElement('p');
+            searchDetail.innerHTML = `<strong>Поиск информации:</strong> ${searchScore} из 5 баллов`;
+            
+            details.appendChild(quizDetail);
+            details.appendChild(searchDetail);
+            
+            const restartBtn = document.createElement('button');
+            restartBtn.className = 'btn btn-block';
+            restartBtn.textContent = 'Начать заново';
+            restartBtn.style.marginTop = '20px';
+            restartBtn.addEventListener('click', handleRestart);
+            
+            card.appendChild(title);
+            card.appendChild(scoreDiv);
+            card.appendChild(messageDiv);
+            card.appendChild(details);
+            card.appendChild(restartBtn);
+            
+            container.appendChild(card);
+        }
+
+        // Handlers: обработчики событий
+        function handleStart() {
+            state.currentScreen = 'quiz';
+            render();
+        }
+
+        function handleQuizAnswer(questionId, answerIndex) {
+            state.quizAnswers[questionId] = answerIndex;
+            render();
+        }
+
+        function handleSubmitQuiz() {
+            // Валидация: все вопросы должны быть отвечены
+            const unanswered = QUIZ_QUESTIONS.filter(q => state.quizAnswers[q.id] === undefined);
+            if (unanswered.length > 0) {
+                alert('Пожалуйста, ответьте на все вопросы теста');
+                return;
+            }
+            
+            state.quizSubmitted = true;
+            render();
+        }
+
+        function handleNextToSearch() {
+            state.currentScreen = 'search';
+            render();
+        }
+
+        function handleSearchAnswer(taskId, value) {
+            state.searchAnswers[taskId] = value;
+        }
+
+        function handleSubmitSearch() {
+            // Валидация: все поля должны быть заполнены
+            const empty = SEARCH_TASKS.filter(t => !state.searchAnswers[t.id] || state.searchAnswers[t.id].trim() === '');
+            if (empty.length > 0) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+            
+            state.searchSubmitted = true;
+            render();
+        }
+
+        function handleShowResult() {
+            state.finalScore = calculateQuizScore() + calculateSearchScore();
+            state.currentScreen = 'result';
+            render();
+        }
+
+        function handleRestart() {
+            state = {
+                currentScreen: 'start',
+                quizAnswers: {},
+                searchAnswers: {},
+                quizSubmitted: false,
+                searchSubmitted: false,
+                finalScore: 0
+            };
+            render();
+        }
+
+        // Подсчет баллов за тест
+        function calculateQuizScore() {
+            let score = 0;
+            QUIZ_QUESTIONS.forEach(q => {
+                if (state.quizAnswers[q.id] === q.correct) {
+                    score++;
+                }
+            });
+            return score;
+        }
+
+        // Подсчет баллов за поиск информации
+        function calculateSearchScore() {
+            let score = 0;
+            SEARCH_TASKS.forEach(task => {
+                const userAnswer = (state.searchAnswers[task.id] || '').toLowerCase().trim();
+                if (userAnswer.includes(task.answer)) {
+                    score++;
+                }
+            });
+            return score;
+        }
+
+        // Init: инициализация приложения
+        function init() {
+            render();
+        }
+
+        // Запуск
+        init();
+    </script>
+</body>
+</html>
